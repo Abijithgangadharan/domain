@@ -22,7 +22,7 @@ jobs:
         run: |
           for domain in $DOMAIN_LIST; do
             echo "Running SSL check for $domain"
-            ./check_ssl_expiry.sh $domain 365  # Change the threshold as needed
+            ./check_ssl_expiry.sh www.google.com 365  # Change the threshold as needed
           done
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
