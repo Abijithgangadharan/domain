@@ -16,7 +16,7 @@ jobs:
       - name: Set up environment
         run: |
           chmod +x check_ssl_expiry.sh
-          DOMAIN_LIST="google.com youtube.com"  # Add your domain names here
+          DOMAIN_LIST="https://www.google.com/ https://www.youtube.com/"  # Add your domain names here
 
       - name: Run SSL check and send alerts
         run: |
