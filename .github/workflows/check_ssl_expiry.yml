@@ -20,10 +20,10 @@ jobs:
 
       - name: Run SSL check and send alerts
         run: |
-          for domain in $DOMAIN_LIST; do
-            echo "Running SSL check for $domain"
+          ##for domain in $DOMAIN_LIST; do
+          ## echo "Running SSL check for $domain"
             ./check_ssl_expiry.sh www.google.com 365  # Change the threshold as needed
-          done
+            ## done
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 env:
