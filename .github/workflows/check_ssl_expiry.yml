@@ -16,11 +16,12 @@ jobs:
       - name: Set up environment
         run: |
           chmod +x check_ssl_expiry.sh
-          DOMAIN_LIST="https://www.google.com/ https://www.youtube.com/"  # Add your domain names here
+          DOMAIN_LIST="https://www.youtube.com/ https://www.google.com/"  # Add your domain names here
 
       - name: Run SSL check and send alerts
         run: |
           for domain in $DOMAIN_LIST; do
+            echo "Running SSL check for $domain"
             ./check_ssl_expiry.sh $domain 30  # Change the threshold as needed
           done
         env:
