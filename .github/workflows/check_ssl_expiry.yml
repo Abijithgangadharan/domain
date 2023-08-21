@@ -1,0 +1,28 @@
+name: Check SSL Expiry
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight
+  workflow_dispatch:   # Manual trigger
+
+jobs:
+  check_ssl_expiry:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x check_ssl_expiry.sh
+          DOMAIN_LIST="google.com youtube.com"  # Add your domain names here
+
+      - name: Run SSL check and send alerts
+        run: |
+          for domain in $DOMAIN_LIST; do
+            ./check_ssl_expiry.sh $domain 30  # Change the threshold as needed
+          done
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
