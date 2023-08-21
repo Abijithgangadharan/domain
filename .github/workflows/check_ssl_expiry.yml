@@ -1,28 +1,47 @@
-name: Check SSL Expiry
+#name: Check SSL Expiry
+#
+#on:
+#  schedule:
+#    - cron: '0 0 * * *'  # Daily at midnight
+#  workflow_dispatch:   # Manual trigger
+#
+#jobs:
+#  check_ssl_expiry:
+#    runs-on: self-hosted
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Run SSL check and send alerts
+#        run: |
+#          chmod +x check_ssl_expiry.sh
+#          DOMAIN_LIST=("www.youtube.com" "www.google.com")
+#          for domain in "${DOMAIN_LIST[@]}"; do
+#            echo "Running SSL check for $domain"
+#            ./check_ssl_expiry.sh $domain 365  # Change the threshold as needed
+#          done
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#env:
+#  ACTIONS_STEP_DEBUG: true
+
+name: CheckIP
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Daily at midnight
-  workflow_dispatch:   # Manual trigger
+  push:
+    branches:
+      - main  # Change this to your desired branch
 
 jobs:
-  check_ssl_expiry:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Run SSL check and send alerts
-        run: |
-          chmod +x check_ssl_expiry.sh
-          DOMAIN_LIST=("www.youtube.com" "www.google.com")
-          for domain in "${DOMAIN_LIST[@]}"; do
-            echo "Running SSL check for $domain"
-            ./check_ssl_expiry.sh $domain 365  # Change the threshold as needed
-          done
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-env:
-  ACTIONS_STEP_DEBUG: true
+    - name: Check IP
+      run: |
+        sshpass -p ${{ secrets.SERVER_PASSWORD }} ssh cicdrunner@192.168.50.129 "ifconfig"
 
