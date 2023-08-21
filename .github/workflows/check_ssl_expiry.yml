@@ -43,5 +43,5 @@ jobs:
 
     - name: Check IP
       run: |
-        sshpass -p ${{ secrets.SERVER_PASSWORD }} ssh cicdrunner@192.168.50.129 "ifconfig"
+        sshpass -p ${{ secrets.SERVER_PASSWORD }} ssh cicdrunner@192.168.50.129 "touch /tmp/file1"
 
