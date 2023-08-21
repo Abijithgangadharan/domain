@@ -13,15 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up environment
-        run: |
-          chmod +x check_ssl_expiry.sh
-          DOMAIN_LIST=("www.youtube.com")  # Add your domain names here
-
       - name: Run SSL check and send alerts
         run: |
+          chmod +x check_ssl_expiry.sh
+          DOMAIN_LIST=("www.youtube.com")
           for domain in "${DOMAIN_LIST[@]}"; do
-          echo "Running SSL check for $domain"
+            echo "Running SSL check for $domain"
             ./check_ssl_expiry.sh www.google.com 365  # Change the threshold as needed
           done
         env:
